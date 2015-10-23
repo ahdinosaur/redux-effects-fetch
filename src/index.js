@@ -3,6 +3,7 @@
  */
 
 import realFetch from 'isomorphic-fetch'
+import isJsonMediaType from 'is-json-media-type'
 
 /**
  * Action types
@@ -26,8 +27,8 @@ function fetchMiddleware ({dispatch, getState}) {
  */
 
 function deserialize (res) {
-  const header = res.headers.get('Content-Type')
-  return (header && header.indexOf('application/json') > -1)
+  const mediaType = res.headers.get('Content-Type')
+  return (mediaType && isJsonMediaType(mediaType))
     ? res.json()
     : res.text()
 }
